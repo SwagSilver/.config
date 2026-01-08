@@ -1,0 +1,6 @@
+[color]
+	ui = always
+
+[init]
+	# prevent git's default branch name from conflicting w/ github's
+	defaultBranch = main
