@@ -18,7 +18,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		os.exit(1)
 	end
 end
-
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
@@ -49,12 +48,6 @@ require("lazy").setup({
             tag = "0.1.8",
             dependencies = { "nvim-lua/plenary.nvim" },
         },
-		{
-			"neovim/nvim-lspconfig",
-			dependencies = { "folke/lazydev.nvim" },
-			config = require("lsp").enable,
-		},
-        { import = "cmp" },
     },
     install = { colorscheme = { "habamax" } },
     checker = { enabled = true },
@@ -98,5 +91,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if client.supports_method("textDocument/rename") then
 			vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 		end
+
+		if client.supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+		end
+
 	end
 })
+
+vim.lsp.enable("phpactor")
